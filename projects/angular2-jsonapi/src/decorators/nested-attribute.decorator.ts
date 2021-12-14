@@ -9,12 +9,13 @@ export function NestedAttribute(options: AttributeDecoratorOptions = {}): Proper
 
       if (options.converter) {
         attrConverter = options.converter;
-      } else {
+      } else if (dataType) {
         const datatype = new dataType();
-
         if (datatype.mask && datatype.unmask) {
           attrConverter = datatype;
         }
+      } else {
+        console.error('Cant\'t determine dataType: ' + dataType);
       }
 
       if (attrConverter) {

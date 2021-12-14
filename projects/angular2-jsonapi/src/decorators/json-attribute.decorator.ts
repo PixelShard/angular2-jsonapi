@@ -8,14 +8,17 @@ export function JsonAttribute(options: AttributeDecoratorOptions = {}): Property
 
       if (options.converter) {
         attrConverter = options.converter;
-      } else if (dataType === Date) {
-        attrConverter = new DateConverter();
-      } else {
-        const datatype = new dataType();
-
-        if (datatype.mask && datatype.unmask) {
-          attrConverter = datatype;
+      }  else if (dataType) {
+        if (dataType === Date) {
+          attrConverter = new DateConverter();
+        } else {
+          const datatype = new dataType();
+          if (datatype.mask && datatype.unmask) {
+            attrConverter = datatype;
+          }
         }
+      } else {
+        console.error('Cant\'t determine dataType: ' + dataType);
       }
 
       if (attrConverter) {
